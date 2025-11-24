@@ -3,9 +3,9 @@
 
 ## Installation
 ```bash 
-conda create -n fmnet python=3.8 # create new viertual environment
-conda activate fmnet
-conda install pytorch cudatoolkit -c pytorch # install pytorch
+conda create -n contrastivefmnet python=3.8 # create new viertual environment
+conda activate contrastivefmnet
+conda install pytorch cudatoolkit -c pytorch # install pytorch, cuda==11.8!
 pip install -r requirements.txt # install other necessary libraries via pip
 ```
 
