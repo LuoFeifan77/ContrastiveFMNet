@@ -59,7 +59,7 @@ You can find all pre-trained models in [checkpoints_ours](checkpoints_ours) for 
 
 ## Acknowledgement
 The framework implementation is adapted from [Unsupervised Learning of Robust Spectral Shape Matching](https://github.com/dongliangcao/Unsupervised-Learning-of-Robust-Spectral-Shape-Matching/tree/main?tab=readme-ov-file).\
-The feature learning network implementation is adapted from [DiffusionNet](https://github.com/nmwsharp/diffusion-net)\
+The feature learning network implementation is adapted from [DiffusionNet](https://github.com/nmwsharp/diffusion-net)
 
 
 
