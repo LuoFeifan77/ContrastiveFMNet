@@ -1,4 +1,4 @@
-## [Unsupervised Learning of Robust Spectral Shape Matching (SIGGRAPH/TOG 2023)](https://dongliangcao.github.io/urssm/)
+##[Unsupervised Learning of Robust Spectral Shape Matching (AAAI 2026)
 ![img](figures/teaser.jpg)
 
 ## Installation
@@ -27,11 +27,8 @@ To train and test datasets used in this paper, please download the datasets from
 ```
 We thank the original dataset providers for their contributions to the shape analysis community, and that all credits should go to the original authors.
 
-## Data preparation
-For data preprocessing, we provide *[preprocess.py](preprocess.py)* to compute all things we need.
-Here is an example for FAUST_r.
-```python
-python preprocess.py --data_root ../data/FAUST_r/ --no_normalize --n_eig 200
+## Data precomputation
+python preprocess_dataset.py  
 ```
 
 ## Train
@@ -58,10 +55,11 @@ python texture_transfer.py
 ```
 
 ## Pretrained models
-You can find all pre-trained models in [checkpoints](checkpoints) for reproducibility.
+You can find all pre-trained models in [checkpoints_ours](checkpoints_ours) for reproducibility.
 
 ## Acknowledgement
-The implementation of DiffusionNet is based on [the official implementation](https://github.com/nmwsharp/diffusion-net).
+The framework implementation is adapted from [Unsupervised Learning of Robust Spectral Shape Matching](https://github.com/dongliangcao/Unsupervised-Learning-of-Robust-Spectral-Shape-Matching/tree/main?tab=readme-ov-file).\
+The feature learning network implementation is adapted from [DiffusionNet](https://github.com/nmwsharp/diffusion-net)\
 
-The framework implementation is adapted from [Unsupervised Deep Multi Shape Matching](https://github.com/dongliangcao/Unsupervised-Deep-Multi-Shape-Matching).
+
 
