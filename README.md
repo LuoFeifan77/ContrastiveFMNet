@@ -1,4 +1,4 @@
-## Unsupervised Learning of Robust Spectral Shape Matching (AAAI 2026)
+## Unsupervised Contrastive Learning for Efficient and Robust Spectral Shape Matching (AAAI 2026)
 ![img](figures/teaser.jpg)
 
 ## Installation
