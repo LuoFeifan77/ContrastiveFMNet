@@ -72,8 +72,8 @@ train:
       w_intra: 0.1   # 
       tau_inter: 1.0
       tau_intra: 1.0  
-      inter_top_k: 50
-      intra_top_k: 50
+      inter_top_k: 30
+      intra_top_k: 30
       bidirectional: false #  True 
 
 # validation setting
