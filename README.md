@@ -63,4 +63,19 @@ The framework implementation is adapted from [Unsupervised Learning of Robust Sp
 The feature learning network implementation is adapted from [DiffusionNet](https://github.com/nmwsharp/diffusion-net)
 
 
+## Attribution
+Please cite our paper when using the code. You can use the following bibtex
+```
+@inproceedings{luo2026unsupervised,
+  title={Unsupervised Contrastive Learning for Efficient and Robust Spectral Shape Matching},
+  author={Luo, Feifan and Chen, Hongyang},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={40},
+  number={9},
+  pages={7662--7670},
+  year={2026}
+}
+
+```
+
 
