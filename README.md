@@ -58,7 +58,7 @@ python texture_transfer.py
 ## Pretrained models
 You can find all pre-trained models in [checkpoints_ours](checkpoints_ours) for reproducibility.
 
-## Matching results
+## Results
 You can find all matching results in [results_ours](results_ours) for reproducibility.
 
 ## Acknowledgement
