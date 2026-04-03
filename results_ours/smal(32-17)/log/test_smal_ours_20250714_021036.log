@@ -1,0 +1,405 @@
+2025-07-14 02:10:36,075 INFO: 
+Version Information: 
+	Python: 3.8.20
+	PyTorch: 2.0.0+cu118
+	TorchVision: 0.15.0+cu118
+2025-07-14 02:10:36,075 INFO: 
+  name: smal_ours
+  backend: dp
+  type: SpatialContrastiveFMNetModel
+  num_gpu: 1
+  gpu_idx: 3
+  manual_seed: 1234
+  non-isometric: True
+  partial: False
+  visualize: True
+  path:[
+    resume_state: checkpoints_ours/smal.pth
+    resume: False
+    results_root: /mnt/zj-gpfs/home/luofeifan/shape_correspondence/ContrastiveFMNet-main/results/smal_ours
+    log: /mnt/zj-gpfs/home/luofeifan/shape_correspondence/ContrastiveFMNet-main/results/smal_ours/log
+    visualization: /mnt/zj-gpfs/home/luofeifan/shape_correspondence/ContrastiveFMNet-main/results/smal_ours/visualization
+  ]
+  datasets:[
+    test_dataset:[
+      name: Val
+      type: PairSmalDataset
+      phase: test
+      data_root: ../data/SMAL_r/
+      category: False
+      return_evecs: True
+      return_faces: True
+      num_evecs: 200
+      return_corr: True
+      return_dist: True
+    ]
+  ]
+  networks:[
+    feature_extractor:[
+      type: DiffusionNet
+      in_channels: 16
+      out_channels: 128
+      cache_dir: ../data/SMAL_r/diffusion
+      input_type: hks
+    ]
+    fmap_net:[
+      type: RegularizedFMNet
+      bidirectional: False
+    ]
+    permutation:[
+      type: Similarity
+      tau: 0.07
+      hard: True
+    ]
+  ]
+  train:[
+    optims:[
+      feature_extractor:[
+        type: Adam
+        lr: 0.001
+      ]
+    ]
+    schedulers:[
+      feature_extractor:[
+        type: none
+      ]
+    ]
+    losses:[
+      rfmnet_loss:[
+        type: RfmnetLoss
+        loss_weight: 1.0
+      ]
+      contrast_loss:[
+        type: PointInfoNCELoss
+        w_inter: 1.0
+        w_intra: 1.0
+        tau_inter: 1.0
+        tau_intra: 1.0
+        inter_top_k: 10
+        intra_top_k: 10
+        bidirectional: False
+      ]
+    ]
+  ]
+  val:[
+    metrics:[
+      geo_error:[
+        type: calculate_geodesic_error
+      ]
+      plot_pck:[
+        type: plot_pck
+      ]
+    ]
+  ]
+  is_train: False
+  dist: False
+  rank: 0
+  world_size: 1
+
+2025-07-14 02:10:36,076 INFO: Dataset [PairSmalDataset]-[Val] is built.
+2025-07-14 02:10:36,077 INFO: Number of test images in Val: 289
+2025-07-14 02:10:36,108 INFO: Network [DiffusionNet] is created.
+2025-07-14 02:10:36,108 INFO: Network [RegularizedFMNet] is created.
+2025-07-14 02:10:36,108 INFO: Network [Similarity] is created.
+2025-07-14 02:10:36,608 INFO: Network: DiffusionNet, with parameters: 479,488
+2025-07-14 02:10:36,608 INFO: Network: RegularizedFMNet, with parameters: 0
+2025-07-14 02:10:36,608 INFO: Network: Similarity, with parameters: 0
+2025-07-14 02:10:36,608 INFO: Metric [function] is created.
+2025-07-14 02:10:36,608 INFO: Metric [function] is created.
+2025-07-14 02:10:38,954 INFO: Resuming network: feature_extractor
+2025-07-14 02:10:38,954 INFO: Network fmap_net has no param. Ignore it.
+2025-07-14 02:10:38,955 INFO: Network permutation has no param. Ignore it.
+2025-07-14 02:10:38,955 INFO: Model [SpatialContrastiveFMNetModel] is created.
+2025-07-14 02:10:38,955 INFO: Testing PairSmalDataset...
+2025-07-14 02:10:40,730 INFO: horse_01-horse_01, geo_err: 0.0000
+2025-07-14 02:10:41,018 INFO: horse_01-horse_04, geo_err: 0.0186
+2025-07-14 02:10:41,627 INFO: horse_01-dog_01, geo_err: 0.0250
+2025-07-14 02:10:42,157 INFO: horse_01-cow_04, geo_err: 0.0225
+2025-07-14 02:10:43,186 INFO: horse_01-cow_03, geo_err: 0.0265
+2025-07-14 02:10:43,588 INFO: horse_01-fox_01, geo_err: 0.0262
+2025-07-14 02:10:45,144 INFO: horse_01-fox_02, geo_err: 0.0319
+2025-07-14 02:10:45,990 INFO: horse_01-hippo_01, geo_err: 0.0951
+2025-07-14 02:10:46,291 INFO: horse_01-hippo_06, geo_err: 0.0928
+2025-07-14 02:10:46,590 INFO: horse_01-lion_02, geo_err: 0.0293
+2025-07-14 02:10:48,772 INFO: horse_01-lion_05, geo_err: 0.0284
+2025-07-14 02:10:49,121 INFO: horse_01-horse_08, geo_err: 0.0180
+2025-07-14 02:10:49,556 INFO: horse_01-cow_06, geo_err: 0.0238
+2025-07-14 02:10:49,819 INFO: horse_01-dog_05, geo_err: 0.0219
+2025-07-14 02:10:51,491 INFO: horse_01-dog_08, geo_err: 0.0225
+2025-07-14 02:10:51,868 INFO: horse_01-wolf_01, geo_err: 0.0220
+2025-07-14 02:10:52,738 INFO: horse_01-wolf_03, geo_err: 0.0254
+2025-07-14 02:10:53,086 INFO: horse_04-horse_01, geo_err: 0.0198
+2025-07-14 02:10:53,774 INFO: horse_04-horse_04, geo_err: 0.0000
+2025-07-14 02:10:54,059 INFO: horse_04-dog_01, geo_err: 0.0265
+2025-07-14 02:10:54,846 INFO: horse_04-cow_04, geo_err: 0.0298
+2025-07-14 02:10:55,167 INFO: horse_04-cow_03, geo_err: 0.0254
+2025-07-14 02:10:56,009 INFO: horse_04-fox_01, geo_err: 0.0277
+2025-07-14 02:10:56,263 INFO: horse_04-fox_02, geo_err: 0.0311
+2025-07-14 02:10:58,346 INFO: horse_04-hippo_01, geo_err: 0.0982
+2025-07-14 02:10:58,632 INFO: horse_04-hippo_06, geo_err: 0.0972
+2025-07-14 02:10:59,392 INFO: horse_04-lion_02, geo_err: 0.0324
+2025-07-14 02:10:59,873 INFO: horse_04-lion_05, geo_err: 0.0313
+2025-07-14 02:11:01,183 INFO: horse_04-horse_08, geo_err: 0.0204
+2025-07-14 02:11:01,520 INFO: horse_04-cow_06, geo_err: 0.0283
+2025-07-14 02:11:02,252 INFO: horse_04-dog_05, geo_err: 0.0244
+2025-07-14 02:11:02,593 INFO: horse_04-dog_08, geo_err: 0.0254
+2025-07-14 02:11:03,618 INFO: horse_04-wolf_01, geo_err: 0.0204
+2025-07-14 02:11:04,510 INFO: horse_04-wolf_03, geo_err: 0.0273
+2025-07-14 02:11:05,246 INFO: dog_01-horse_01, geo_err: 0.0238
+2025-07-14 02:11:05,520 INFO: dog_01-horse_04, geo_err: 0.0245
+2025-07-14 02:11:06,220 INFO: dog_01-dog_01, geo_err: 0.0000
+2025-07-14 02:11:06,552 INFO: dog_01-cow_04, geo_err: 0.0317
+2025-07-14 02:11:07,377 INFO: dog_01-cow_03, geo_err: 0.0315
+2025-07-14 02:11:07,915 INFO: dog_01-fox_01, geo_err: 0.0140
+2025-07-14 02:11:08,653 INFO: dog_01-fox_02, geo_err: 0.0205
+2025-07-14 02:11:08,943 INFO: dog_01-hippo_01, geo_err: 0.0880
+2025-07-14 02:11:10,576 INFO: dog_01-hippo_06, geo_err: 0.0887
+2025-07-14 02:11:10,853 INFO: dog_01-lion_02, geo_err: 0.0219
+2025-07-14 02:11:11,511 INFO: dog_01-lion_05, geo_err: 0.0201
+2025-07-14 02:11:11,791 INFO: dog_01-horse_08, geo_err: 0.0214
+2025-07-14 02:11:12,830 INFO: dog_01-cow_06, geo_err: 0.0295
+2025-07-14 02:11:13,167 INFO: dog_01-dog_05, geo_err: 0.0214
+2025-07-14 02:11:14,000 INFO: dog_01-dog_08, geo_err: 0.0180
+2025-07-14 02:11:14,261 INFO: dog_01-wolf_01, geo_err: 0.0220
+2025-07-14 02:11:15,117 INFO: dog_01-wolf_03, geo_err: 0.0182
+2025-07-14 02:11:15,920 INFO: cow_04-horse_01, geo_err: 0.0225
+2025-07-14 02:11:16,508 INFO: cow_04-horse_04, geo_err: 0.0309
+2025-07-14 02:11:16,932 INFO: cow_04-dog_01, geo_err: 0.0346
+2025-07-14 02:11:17,665 INFO: cow_04-cow_04, geo_err: 0.0000
+2025-07-14 02:11:18,040 INFO: cow_04-cow_03, geo_err: 0.0227
+2025-07-14 02:11:18,807 INFO: cow_04-fox_01, geo_err: 0.0354
+2025-07-14 02:11:19,121 INFO: cow_04-fox_02, geo_err: 0.0402
+2025-07-14 02:11:20,054 INFO: cow_04-hippo_01, geo_err: 0.0908
+2025-07-14 02:11:20,492 INFO: cow_04-hippo_06, geo_err: 0.0846
+2025-07-14 02:11:21,240 INFO: cow_04-lion_02, geo_err: 0.0322
+2025-07-14 02:11:22,773 INFO: cow_04-lion_05, geo_err: 0.0314
+2025-07-14 02:11:23,348 INFO: cow_04-horse_08, geo_err: 0.0269
+2025-07-14 02:11:23,834 INFO: cow_04-cow_06, geo_err: 0.0199
+2025-07-14 02:11:24,332 INFO: cow_04-dog_05, geo_err: 0.0279
+2025-07-14 02:11:24,700 INFO: cow_04-dog_08, geo_err: 0.0284
+2025-07-14 02:11:25,485 INFO: cow_04-wolf_01, geo_err: 0.0302
+2025-07-14 02:11:27,193 INFO: cow_04-wolf_03, geo_err: 0.0305
+2025-07-14 02:11:27,551 INFO: cow_03-horse_01, geo_err: 0.0253
+2025-07-14 02:11:28,197 INFO: cow_03-horse_04, geo_err: 0.0248
+2025-07-14 02:11:28,766 INFO: cow_03-dog_01, geo_err: 0.0322
+2025-07-14 02:11:31,278 INFO: cow_03-cow_04, geo_err: 0.0206
+2025-07-14 02:11:31,969 INFO: cow_03-cow_03, geo_err: 0.0000
+2025-07-14 02:11:32,811 INFO: cow_03-fox_01, geo_err: 0.0344
+2025-07-14 02:11:33,566 INFO: cow_03-fox_02, geo_err: 0.0405
+2025-07-14 02:11:34,207 INFO: cow_03-hippo_01, geo_err: 0.0896
+2025-07-14 02:11:34,519 INFO: cow_03-hippo_06, geo_err: 0.0854
+2025-07-14 02:11:35,507 INFO: cow_03-lion_02, geo_err: 0.0327
+2025-07-14 02:11:35,855 INFO: cow_03-lion_05, geo_err: 0.0312
+2025-07-14 02:11:36,533 INFO: cow_03-horse_08, geo_err: 0.0270
+2025-07-14 02:11:36,805 INFO: cow_03-cow_06, geo_err: 0.0204
+2025-07-14 02:11:37,758 INFO: cow_03-dog_05, geo_err: 0.0241
+2025-07-14 02:11:38,347 INFO: cow_03-dog_08, geo_err: 0.0277
+2025-07-14 02:11:39,159 INFO: cow_03-wolf_01, geo_err: 0.0285
+2025-07-14 02:11:39,427 INFO: cow_03-wolf_03, geo_err: 0.0278
+2025-07-14 02:11:40,695 INFO: fox_01-horse_01, geo_err: 0.0242
+2025-07-14 02:11:41,014 INFO: fox_01-horse_04, geo_err: 0.0256
+2025-07-14 02:11:41,910 INFO: fox_01-dog_01, geo_err: 0.0140
+2025-07-14 02:11:42,338 INFO: fox_01-cow_04, geo_err: 0.0309
+2025-07-14 02:11:43,407 INFO: fox_01-cow_03, geo_err: 0.0316
+2025-07-14 02:11:43,954 INFO: fox_01-fox_01, geo_err: 0.0000
+2025-07-14 02:11:46,889 INFO: fox_01-fox_02, geo_err: 0.0189
+2025-07-14 02:11:47,276 INFO: fox_01-hippo_01, geo_err: 0.0907
+2025-07-14 02:11:47,592 INFO: fox_01-hippo_06, geo_err: 0.0899
+2025-07-14 02:11:47,877 INFO: fox_01-lion_02, geo_err: 0.0214
+2025-07-14 02:11:48,516 INFO: fox_01-lion_05, geo_err: 0.0205
+2025-07-14 02:11:49,001 INFO: fox_01-horse_08, geo_err: 0.0222
+2025-07-14 02:11:51,070 INFO: fox_01-cow_06, geo_err: 0.0286
+2025-07-14 02:11:51,351 INFO: fox_01-dog_05, geo_err: 0.0220
+2025-07-14 02:11:51,726 INFO: fox_01-dog_08, geo_err: 0.0173
+2025-07-14 02:11:52,060 INFO: fox_01-wolf_01, geo_err: 0.0213
+2025-07-14 02:11:53,092 INFO: fox_01-wolf_03, geo_err: 0.0172
+2025-07-14 02:11:53,493 INFO: fox_02-horse_01, geo_err: 0.0292
+2025-07-14 02:11:54,218 INFO: fox_02-horse_04, geo_err: 0.0292
+2025-07-14 02:11:54,580 INFO: fox_02-dog_01, geo_err: 0.0200
+2025-07-14 02:11:56,138 INFO: fox_02-cow_04, geo_err: 0.0376
+2025-07-14 02:11:57,868 INFO: fox_02-cow_03, geo_err: 0.0384
+2025-07-14 02:11:58,296 INFO: fox_02-fox_01, geo_err: 0.0186
+2025-07-14 02:11:58,669 INFO: fox_02-fox_02, geo_err: 0.0000
+2025-07-14 02:11:59,473 INFO: fox_02-hippo_01, geo_err: 0.0967
+2025-07-14 02:12:01,263 INFO: fox_02-hippo_06, geo_err: 0.0962
+2025-07-14 02:12:01,633 INFO: fox_02-lion_02, geo_err: 0.0244
+2025-07-14 02:12:02,027 INFO: fox_02-lion_05, geo_err: 0.0234
+2025-07-14 02:12:03,123 INFO: fox_02-horse_08, geo_err: 0.0267
+2025-07-14 02:12:03,493 INFO: fox_02-cow_06, geo_err: 0.0355
+2025-07-14 02:12:04,293 INFO: fox_02-dog_05, geo_err: 0.0294
+2025-07-14 02:12:04,725 INFO: fox_02-dog_08, geo_err: 0.0219
+2025-07-14 02:12:06,368 INFO: fox_02-wolf_01, geo_err: 0.0194
+2025-07-14 02:12:08,425 INFO: fox_02-wolf_03, geo_err: 0.0225
+2025-07-14 02:12:08,790 INFO: hippo_01-horse_01, geo_err: 0.0824
+2025-07-14 02:12:09,073 INFO: hippo_01-horse_04, geo_err: 0.0834
+2025-07-14 02:12:09,861 INFO: hippo_01-dog_01, geo_err: 0.0872
+2025-07-14 02:12:10,310 INFO: hippo_01-cow_04, geo_err: 0.0772
+2025-07-14 02:12:11,171 INFO: hippo_01-cow_03, geo_err: 0.0764
+2025-07-14 02:12:11,465 INFO: hippo_01-fox_01, geo_err: 0.0848
+2025-07-14 02:12:12,371 INFO: hippo_01-fox_02, geo_err: 0.0886
+2025-07-14 02:12:12,671 INFO: hippo_01-hippo_01, geo_err: 0.0000
+2025-07-14 02:12:13,595 INFO: hippo_01-hippo_06, geo_err: 0.0141
+2025-07-14 02:12:13,889 INFO: hippo_01-lion_02, geo_err: 0.0828
+2025-07-14 02:12:14,786 INFO: hippo_01-lion_05, geo_err: 0.0813
+2025-07-14 02:12:16,761 INFO: hippo_01-horse_08, geo_err: 0.0844
+2025-07-14 02:12:17,149 INFO: hippo_01-cow_06, geo_err: 0.0732
+2025-07-14 02:12:17,786 INFO: hippo_01-dog_05, geo_err: 0.0811
+2025-07-14 02:12:18,367 INFO: hippo_01-dog_08, geo_err: 0.0826
+2025-07-14 02:12:18,720 INFO: hippo_01-wolf_01, geo_err: 0.0767
+2025-07-14 02:12:19,675 INFO: hippo_01-wolf_03, geo_err: 0.0815
+2025-07-14 02:12:20,680 INFO: hippo_06-horse_01, geo_err: 0.0783
+2025-07-14 02:12:21,180 INFO: hippo_06-horse_04, geo_err: 0.0802
+2025-07-14 02:12:21,639 INFO: hippo_06-dog_01, geo_err: 0.0847
+2025-07-14 02:12:22,755 INFO: hippo_06-cow_04, geo_err: 0.0712
+2025-07-14 02:12:23,113 INFO: hippo_06-cow_03, geo_err: 0.0724
+2025-07-14 02:12:23,868 INFO: hippo_06-fox_01, geo_err: 0.0810
+2025-07-14 02:12:24,508 INFO: hippo_06-fox_02, geo_err: 0.0859
+2025-07-14 02:12:25,181 INFO: hippo_06-hippo_01, geo_err: 0.0137
+2025-07-14 02:12:26,254 INFO: hippo_06-hippo_06, geo_err: 0.0000
+2025-07-14 02:12:26,958 INFO: hippo_06-lion_02, geo_err: 0.0787
+2025-07-14 02:12:27,299 INFO: hippo_06-lion_05, geo_err: 0.0786
+2025-07-14 02:12:27,966 INFO: hippo_06-horse_08, geo_err: 0.0809
+2025-07-14 02:12:28,602 INFO: hippo_06-cow_06, geo_err: 0.0693
+2025-07-14 02:12:29,113 INFO: hippo_06-dog_05, geo_err: 0.0773
+2025-07-14 02:12:29,772 INFO: hippo_06-dog_08, geo_err: 0.0773
+2025-07-14 02:12:31,778 INFO: hippo_06-wolf_01, geo_err: 0.0751
+2025-07-14 02:12:32,146 INFO: hippo_06-wolf_03, geo_err: 0.0765
+2025-07-14 02:12:32,430 INFO: lion_02-horse_01, geo_err: 0.0283
+2025-07-14 02:12:32,822 INFO: lion_02-horse_04, geo_err: 0.0305
+2025-07-14 02:12:33,906 INFO: lion_02-dog_01, geo_err: 0.0226
+2025-07-14 02:12:34,337 INFO: lion_02-cow_04, geo_err: 0.0326
+2025-07-14 02:12:34,909 INFO: lion_02-cow_03, geo_err: 0.0340
+2025-07-14 02:12:35,489 INFO: lion_02-fox_01, geo_err: 0.0223
+2025-07-14 02:12:36,071 INFO: lion_02-fox_02, geo_err: 0.0255
+2025-07-14 02:12:36,698 INFO: lion_02-hippo_01, geo_err: 0.1023
+2025-07-14 02:12:37,221 INFO: lion_02-hippo_06, geo_err: 0.1025
+2025-07-14 02:12:37,836 INFO: lion_02-lion_02, geo_err: 0.0000
+2025-07-14 02:12:38,410 INFO: lion_02-lion_05, geo_err: 0.0139
+2025-07-14 02:12:39,320 INFO: lion_02-horse_08, geo_err: 0.0261
+2025-07-14 02:12:39,972 INFO: lion_02-cow_06, geo_err: 0.0297
+2025-07-14 02:12:40,480 INFO: lion_02-dog_05, geo_err: 0.0267
+2025-07-14 02:12:41,028 INFO: lion_02-dog_08, geo_err: 0.0212
+2025-07-14 02:12:41,653 INFO: lion_02-wolf_01, geo_err: 0.0273
+2025-07-14 02:12:42,240 INFO: lion_02-wolf_03, geo_err: 0.0214
+2025-07-14 02:12:43,103 INFO: lion_05-horse_01, geo_err: 0.0278
+2025-07-14 02:12:45,045 INFO: lion_05-horse_04, geo_err: 0.0298
+2025-07-14 02:12:45,330 INFO: lion_05-dog_01, geo_err: 0.0205
+2025-07-14 02:12:45,727 INFO: lion_05-cow_04, geo_err: 0.0314
+2025-07-14 02:12:46,468 INFO: lion_05-cow_03, geo_err: 0.0317
+2025-07-14 02:12:46,870 INFO: lion_05-fox_01, geo_err: 0.0224
+2025-07-14 02:12:50,279 INFO: lion_05-fox_02, geo_err: 0.0255
+2025-07-14 02:12:51,076 INFO: lion_05-hippo_01, geo_err: 0.1003
+2025-07-14 02:12:51,391 INFO: lion_05-hippo_06, geo_err: 0.1009
+2025-07-14 02:12:54,092 INFO: lion_05-lion_02, geo_err: 0.0138
+2025-07-14 02:12:54,375 INFO: lion_05-lion_05, geo_err: 0.0000
+2025-07-14 02:12:56,650 INFO: lion_05-horse_08, geo_err: 0.0256
+2025-07-14 02:12:56,960 INFO: lion_05-cow_06, geo_err: 0.0295
+2025-07-14 02:12:59,473 INFO: lion_05-dog_05, geo_err: 0.0253
+2025-07-14 02:12:59,770 INFO: lion_05-dog_08, geo_err: 0.0210
+2025-07-14 02:13:02,164 INFO: lion_05-wolf_01, geo_err: 0.0266
+2025-07-14 02:13:02,504 INFO: lion_05-wolf_03, geo_err: 0.0207
+2025-07-14 02:13:04,455 INFO: horse_08-horse_01, geo_err: 0.0178
+2025-07-14 02:13:05,515 INFO: horse_08-horse_04, geo_err: 0.0191
+2025-07-14 02:13:07,072 INFO: horse_08-dog_01, geo_err: 0.0220
+2025-07-14 02:13:09,044 INFO: horse_08-cow_04, geo_err: 0.0261
+2025-07-14 02:13:09,558 INFO: horse_08-cow_03, geo_err: 0.0271
+2025-07-14 02:13:09,921 INFO: horse_08-fox_01, geo_err: 0.0232
+2025-07-14 02:13:11,740 INFO: horse_08-fox_02, geo_err: 0.0267
+2025-07-14 02:13:12,230 INFO: horse_08-hippo_01, geo_err: 0.0936
+2025-07-14 02:13:14,464 INFO: horse_08-hippo_06, geo_err: 0.0934
+2025-07-14 02:13:14,871 INFO: horse_08-lion_02, geo_err: 0.0262
+2025-07-14 02:13:16,169 INFO: horse_08-lion_05, geo_err: 0.0258
+2025-07-14 02:13:17,576 INFO: horse_08-horse_08, geo_err: 0.0000
+2025-07-14 02:13:19,336 INFO: horse_08-cow_06, geo_err: 0.0258
+2025-07-14 02:13:20,908 INFO: horse_08-dog_05, geo_err: 0.0225
+2025-07-14 02:13:22,371 INFO: horse_08-dog_08, geo_err: 0.0226
+2025-07-14 02:13:22,932 INFO: horse_08-wolf_01, geo_err: 0.0202
+2025-07-14 02:13:24,177 INFO: horse_08-wolf_03, geo_err: 0.0242
+2025-07-14 02:13:24,597 INFO: cow_06-horse_01, geo_err: 0.0250
+2025-07-14 02:13:25,805 INFO: cow_06-horse_04, geo_err: 0.0271
+2025-07-14 02:13:26,305 INFO: cow_06-dog_01, geo_err: 0.0308
+2025-07-14 02:13:26,803 INFO: cow_06-cow_04, geo_err: 0.0196
+2025-07-14 02:13:27,575 INFO: cow_06-cow_03, geo_err: 0.0214
+2025-07-14 02:13:29,195 INFO: cow_06-fox_01, geo_err: 0.0311
+2025-07-14 02:13:31,836 INFO: cow_06-fox_02, geo_err: 0.0367
+2025-07-14 02:13:33,352 INFO: cow_06-hippo_01, geo_err: 0.0911
+2025-07-14 02:13:34,101 INFO: cow_06-hippo_06, geo_err: 0.0882
+2025-07-14 02:13:36,980 INFO: cow_06-lion_02, geo_err: 0.0297
+2025-07-14 02:13:37,281 INFO: cow_06-lion_05, geo_err: 0.0299
+2025-07-14 02:13:37,877 INFO: cow_06-horse_08, geo_err: 0.0266
+2025-07-14 02:13:40,355 INFO: cow_06-cow_06, geo_err: 0.0000
+2025-07-14 02:13:41,161 INFO: cow_06-dog_05, geo_err: 0.0210
+2025-07-14 02:13:43,278 INFO: cow_06-dog_08, geo_err: 0.0240
+2025-07-14 02:13:43,547 INFO: cow_06-wolf_01, geo_err: 0.0282
+2025-07-14 02:13:43,932 INFO: cow_06-wolf_03, geo_err: 0.0273
+2025-07-14 02:13:44,754 INFO: dog_05-horse_01, geo_err: 0.0226
+2025-07-14 02:13:45,073 INFO: dog_05-horse_04, geo_err: 0.0233
+2025-07-14 02:13:46,900 INFO: dog_05-dog_01, geo_err: 0.0222
+2025-07-14 02:13:47,171 INFO: dog_05-cow_04, geo_err: 0.0267
+2025-07-14 02:13:47,477 INFO: dog_05-cow_03, geo_err: 0.0253
+2025-07-14 02:13:49,674 INFO: dog_05-fox_01, geo_err: 0.0227
+2025-07-14 02:13:49,972 INFO: dog_05-fox_02, geo_err: 0.0309
+2025-07-14 02:13:50,547 INFO: dog_05-hippo_01, geo_err: 0.0964
+2025-07-14 02:13:50,849 INFO: dog_05-hippo_06, geo_err: 0.0925
+2025-07-14 02:13:51,159 INFO: dog_05-lion_02, geo_err: 0.0273
+2025-07-14 02:13:53,171 INFO: dog_05-lion_05, geo_err: 0.0259
+2025-07-14 02:13:53,444 INFO: dog_05-horse_08, geo_err: 0.0231
+2025-07-14 02:13:53,745 INFO: dog_05-cow_06, geo_err: 0.0205
+2025-07-14 02:13:54,099 INFO: dog_05-dog_05, geo_err: 0.0000
+2025-07-14 02:13:54,778 INFO: dog_05-dog_08, geo_err: 0.0203
+2025-07-14 02:13:55,079 INFO: dog_05-wolf_01, geo_err: 0.0230
+2025-07-14 02:13:58,254 INFO: dog_05-wolf_03, geo_err: 0.0205
+2025-07-14 02:13:58,751 INFO: dog_08-horse_01, geo_err: 0.0227
+2025-07-14 02:13:59,029 INFO: dog_08-horse_04, geo_err: 0.0241
+2025-07-14 02:13:59,285 INFO: dog_08-dog_01, geo_err: 0.0184
+2025-07-14 02:13:59,544 INFO: dog_08-cow_04, geo_err: 0.0282
+2025-07-14 02:13:59,828 INFO: dog_08-cow_03, geo_err: 0.0288
+2025-07-14 02:14:00,763 INFO: dog_08-fox_01, geo_err: 0.0178
+2025-07-14 02:14:01,803 INFO: dog_08-fox_02, geo_err: 0.0220
+2025-07-14 02:14:02,518 INFO: dog_08-hippo_01, geo_err: 0.0991
+2025-07-14 02:14:02,812 INFO: dog_08-hippo_06, geo_err: 0.0974
+2025-07-14 02:14:03,491 INFO: dog_08-lion_02, geo_err: 0.0213
+2025-07-14 02:14:04,796 INFO: dog_08-lion_05, geo_err: 0.0207
+2025-07-14 02:14:05,974 INFO: dog_08-horse_08, geo_err: 0.0234
+2025-07-14 02:14:06,404 INFO: dog_08-cow_06, geo_err: 0.0240
+2025-07-14 02:14:06,938 INFO: dog_08-dog_05, geo_err: 0.0203
+2025-07-14 02:14:07,222 INFO: dog_08-dog_08, geo_err: 0.0000
+2025-07-14 02:14:08,023 INFO: dog_08-wolf_01, geo_err: 0.0217
+2025-07-14 02:14:08,354 INFO: dog_08-wolf_03, geo_err: 0.0192
+2025-07-14 02:14:09,822 INFO: wolf_01-horse_01, geo_err: 0.0230
+2025-07-14 02:14:10,081 INFO: wolf_01-horse_04, geo_err: 0.0212
+2025-07-14 02:14:11,057 INFO: wolf_01-dog_01, geo_err: 0.0227
+2025-07-14 02:14:11,352 INFO: wolf_01-cow_04, geo_err: 0.0305
+2025-07-14 02:14:13,965 INFO: wolf_01-cow_03, geo_err: 0.0298
+2025-07-14 02:14:14,230 INFO: wolf_01-fox_01, geo_err: 0.0226
+2025-07-14 02:14:14,497 INFO: wolf_01-fox_02, geo_err: 0.0206
+2025-07-14 02:14:16,769 INFO: wolf_01-hippo_01, geo_err: 0.0936
+2025-07-14 02:14:17,394 INFO: wolf_01-hippo_06, geo_err: 0.0940
+2025-07-14 02:14:18,986 INFO: wolf_01-lion_02, geo_err: 0.0270
+2025-07-14 02:14:19,284 INFO: wolf_01-lion_05, geo_err: 0.0264
+2025-07-14 02:14:19,612 INFO: wolf_01-horse_08, geo_err: 0.0214
+2025-07-14 02:14:20,343 INFO: wolf_01-cow_06, geo_err: 0.0297
+2025-07-14 02:14:20,652 INFO: wolf_01-dog_05, geo_err: 0.0237
+2025-07-14 02:14:21,279 INFO: wolf_01-dog_08, geo_err: 0.0220
+2025-07-14 02:14:22,031 INFO: wolf_01-wolf_01, geo_err: 0.0000
+2025-07-14 02:14:23,452 INFO: wolf_01-wolf_03, geo_err: 0.0221
+2025-07-14 02:14:25,165 INFO: wolf_03-horse_01, geo_err: 0.0247
+2025-07-14 02:14:25,498 INFO: wolf_03-horse_04, geo_err: 0.0249
+2025-07-14 02:14:27,279 INFO: wolf_03-dog_01, geo_err: 0.0186
+2025-07-14 02:14:27,530 INFO: wolf_03-cow_04, geo_err: 0.0295
+2025-07-14 02:14:27,811 INFO: wolf_03-cow_03, geo_err: 0.0293
+2025-07-14 02:14:29,569 INFO: wolf_03-fox_01, geo_err: 0.0177
+2025-07-14 02:14:29,857 INFO: wolf_03-fox_02, geo_err: 0.0231
+2025-07-14 02:14:30,200 INFO: wolf_03-hippo_01, geo_err: 0.0911
+2025-07-14 02:14:30,484 INFO: wolf_03-hippo_06, geo_err: 0.0898
+2025-07-14 02:14:31,218 INFO: wolf_03-lion_02, geo_err: 0.0214
+2025-07-14 02:14:31,509 INFO: wolf_03-lion_05, geo_err: 0.0203
+2025-07-14 02:14:33,182 INFO: wolf_03-horse_08, geo_err: 0.0244
+2025-07-14 02:14:34,082 INFO: wolf_03-cow_06, geo_err: 0.0277
+2025-07-14 02:14:34,433 INFO: wolf_03-dog_05, geo_err: 0.0214
+2025-07-14 02:14:36,110 INFO: wolf_03-dog_08, geo_err: 0.0192
+2025-07-14 02:14:36,476 INFO: wolf_03-wolf_01, geo_err: 0.0210
+2025-07-14 02:14:36,744 INFO: wolf_03-wolf_03, geo_err: 0.0000
+2025-07-14 02:14:36,774 INFO: Avg time: 0.5441
+2025-07-14 02:14:36,968 INFO: Val auc: 0.7440
+2025-07-14 02:14:36,968 INFO: Val avg error: 0.0363

@@ -1,0 +1,110 @@
+2025-07-14 02:13:29,725 INFO: 
+Version Information: 
+	Python: 3.8.20
+	PyTorch: 2.0.0+cu118
+	TorchVision: 0.15.0+cu118
+2025-07-14 02:13:29,725 INFO: 
+  name: topkids_ours
+  backend: dp
+  type: SpatialContrastiveFMNetModel
+  num_gpu: 1
+  gpu_idx: 3
+  manual_seed: 1234
+  non-isometric: False
+  partial: False
+  visualize: True
+  path:[
+    resume_state: checkpoints_ours/topkids.pth
+    resume: False
+    results_root: /mnt/zj-gpfs/home/luofeifan/shape_correspondence/ContrastiveFMNet-main/results/topkids_ours
+    log: /mnt/zj-gpfs/home/luofeifan/shape_correspondence/ContrastiveFMNet-main/results/topkids_ours/log
+    visualization: /mnt/zj-gpfs/home/luofeifan/shape_correspondence/ContrastiveFMNet-main/results/topkids_ours/visualization
+  ]
+  datasets:[
+    test_dataset:[
+      name: Val
+      type: PairTopKidsDataset
+      phase: test
+      data_root: ../data/TOPKIDS/
+      return_evecs: True
+      return_faces: True
+      num_evecs: 200
+      return_dist: True
+    ]
+  ]
+  networks:[
+    feature_extractor:[
+      type: DiffusionNet
+      in_channels: 16
+      out_channels: 128
+      cache_dir: ../data/TOPKIDS/diffusion
+      input_type: hks
+    ]
+    fmap_net:[
+      type: RegularizedFMNet
+      bidirectional: False
+    ]
+    permutation:[
+      type: Similarity
+      tau: 0.07
+      hard: True
+    ]
+  ]
+  val:[
+    metrics:[
+      geo_error:[
+        type: calculate_geodesic_error
+      ]
+      plot_pck:[
+        type: plot_pck
+      ]
+    ]
+  ]
+  is_train: False
+  dist: False
+  rank: 0
+  world_size: 1
+
+2025-07-14 02:13:29,736 INFO: Dataset [PairTopKidsDataset]-[Val] is built.
+2025-07-14 02:13:29,736 INFO: Number of test images in Val: 25
+2025-07-14 02:13:29,749 INFO: Network [DiffusionNet] is created.
+2025-07-14 02:13:29,749 INFO: Network [RegularizedFMNet] is created.
+2025-07-14 02:13:29,750 INFO: Network [Similarity] is created.
+2025-07-14 02:13:31,636 INFO: Network: DiffusionNet, with parameters: 479,488
+2025-07-14 02:13:31,636 INFO: Network: RegularizedFMNet, with parameters: 0
+2025-07-14 02:13:31,637 INFO: Network: Similarity, with parameters: 0
+2025-07-14 02:13:31,637 INFO: Metric [function] is created.
+2025-07-14 02:13:31,637 INFO: Metric [function] is created.
+2025-07-14 02:13:35,758 INFO: Resuming network: feature_extractor
+2025-07-14 02:13:35,758 INFO: Network fmap_net has no param. Ignore it.
+2025-07-14 02:13:35,758 INFO: Network permutation has no param. Ignore it.
+2025-07-14 02:13:35,759 INFO: Model [SpatialContrastiveFMNetModel] is created.
+2025-07-14 02:13:35,759 INFO: Testing PairTopKidsDataset...
+2025-07-14 02:13:47,182 INFO: kid00-kid01, geo_err: 0.0403
+2025-07-14 02:13:49,750 INFO: kid00-kid02, geo_err: 0.0615
+2025-07-14 02:13:54,604 INFO: kid00-kid03, geo_err: 0.1137
+2025-07-14 02:13:58,677 INFO: kid00-kid04, geo_err: 0.0260
+2025-07-14 02:14:04,169 INFO: kid00-kid05, geo_err: 0.0163
+2025-07-14 02:14:06,245 INFO: kid00-kid06, geo_err: 0.0533
+2025-07-14 02:14:14,308 INFO: kid00-kid07, geo_err: 0.0155
+2025-07-14 02:14:17,867 INFO: kid00-kid08, geo_err: 0.0224
+2025-07-14 02:14:23,331 INFO: kid00-kid09, geo_err: 0.0176
+2025-07-14 02:14:25,829 INFO: kid00-kid10, geo_err: 0.0236
+2025-07-14 02:14:34,073 INFO: kid00-kid11, geo_err: 0.0269
+2025-07-14 02:14:36,378 INFO: kid00-kid12, geo_err: 0.0888
+2025-07-14 02:14:40,733 INFO: kid00-kid13, geo_err: 0.0613
+2025-07-14 02:14:41,784 INFO: kid00-kid14, geo_err: 0.1833
+2025-07-14 02:14:46,723 INFO: kid00-kid15, geo_err: 0.3980
+2025-07-14 02:14:48,745 INFO: kid00-kid16, geo_err: 0.0441
+2025-07-14 02:14:54,099 INFO: kid00-kid17, geo_err: 0.0664
+2025-07-14 02:14:55,351 INFO: kid00-kid18, geo_err: 0.0728
+2025-07-14 02:14:59,561 INFO: kid00-kid19, geo_err: 0.2576
+2025-07-14 02:15:00,450 INFO: kid00-kid20, geo_err: 0.1042
+2025-07-14 02:15:05,663 INFO: kid00-kid21, geo_err: 0.0523
+2025-07-14 02:15:07,592 INFO: kid00-kid22, geo_err: 0.0459
+2025-07-14 02:15:12,281 INFO: kid00-kid23, geo_err: 0.0533
+2025-07-14 02:15:13,305 INFO: kid00-kid24, geo_err: 0.0339
+2025-07-14 02:15:17,871 INFO: kid00-kid25, geo_err: 0.0576
+2025-07-14 02:15:17,901 INFO: Avg time: 0.7566
+2025-07-14 02:15:18,072 INFO: Val auc: 0.7014
+2025-07-14 02:15:18,073 INFO: Val avg error: 0.0724
