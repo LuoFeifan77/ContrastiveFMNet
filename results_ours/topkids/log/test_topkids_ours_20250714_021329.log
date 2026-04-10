@@ -6,7 +6,7 @@ Version Information:
 2025-07-14 02:13:29,725 INFO: 
   name: topkids_ours
   backend: dp
-  type: SpatialContrastiveFMNetModel
+  type: ContrastiveFMNetModel
   num_gpu: 1
   gpu_idx: 3
   manual_seed: 1234

@@ -6,7 +6,7 @@ Version Information:
 2025-07-14 02:08:53,845 INFO: 
   name: F_S19_ours
   backend: dp
-  type: SpatialContrastiveFMNetModel
+  type: ContrastiveFMNetModel
   num_gpu: 1
   gpu_idx: 1
   manual_seed: 1234
@@ -15,7 +15,7 @@ Version Information:
   partial: False
   visualize: True
   path:[
-    resume_state: checkpoints_ours/faust13000.pth
+    resume_state: checkpoints_ours/faust.pth
     resume: False
     results_root: /mnt/zj-gpfs/home/luofeifan/shape_correspondence/ContrastiveFMNet-main/results/F_S19_ours
     log: /mnt/zj-gpfs/home/luofeifan/shape_correspondence/ContrastiveFMNet-main/results/F_S19_ours/log

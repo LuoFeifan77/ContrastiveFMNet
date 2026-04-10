@@ -6,7 +6,7 @@ Version Information:
 2025-07-14 02:10:36,075 INFO: 
   name: smal_ours
   backend: dp
-  type: SpatialContrastiveFMNetModel
+  type: ContrastiveFMNetModel
   num_gpu: 1
   gpu_idx: 3
   manual_seed: 1234

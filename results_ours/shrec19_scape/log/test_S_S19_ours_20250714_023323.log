@@ -6,7 +6,7 @@ Version Information:
 2025-07-14 02:33:23,161 INFO: 
   name: S_S19_ours
   backend: dp
-  type: SpatialContrastiveFMNetModel
+  type: ContrastiveFMNetModel
   num_gpu: 1
   gpu_idx: 1
   manual_seed: 1234
