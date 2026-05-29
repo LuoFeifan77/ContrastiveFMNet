@@ -10,7 +10,7 @@ pip install -r requirements.txt # install other necessary libraries via pip
 ```
 
 ## Dataset
-To train and test datasets used in this paper, please download the datasets from the this [link](https://drive.google.com/file/d/1zbBs3NjUIBBmVebw38MC1nhu_Tpgn1gr/view?usp=share_link) and put all datasets under ../data/
+To train and test datasets used in this paper, please download the datasets from [DongliangCao](https://drive.google.com/file/d/1zbBs3NjUIBBmVebw38MC1nhu_Tpgn1gr/view?usp=share_link) and put all datasets under ../data/
 ```Shell
 ├── data
     ├── FAUST_r
@@ -56,10 +56,10 @@ python texture_transfer.py
 ```
 
 ## Pretrained models
-You can find all pre-trained models in [checkpoints_ours](checkpoints_ours) for reproducibility.
+You can find all pre-trained models in [checkpoints](checkpoints) for reproducibility.
 
 ## Results
-You can find all matching results in [results_ours](results_ours).
+You can find all matching results in [results](results).
 
 ## Acknowledgement
 The framework implementation is adapted from [Unsupervised Learning of Robust Spectral Shape Matching](https://github.com/dongliangcao/Unsupervised-Learning-of-Robust-Spectral-Shape-Matching/tree/main?tab=readme-ov-file).\
